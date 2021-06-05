@@ -2,7 +2,7 @@
 // (noteCount - 13) * 920 + 4715
 function PageLoad() {
     if (window.location.protocol != "http") {
-        window.location.protocol = "https";
+        window.location.protocol = "http";
     }
     const urlParams = new URLSearchParams(window.location.search);
     const map = urlParams.get("map");
