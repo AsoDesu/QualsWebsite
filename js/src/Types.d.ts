@@ -22,7 +22,7 @@ interface ReqParams {
 
 interface Score {
 	EventId: string;
-	Parameters: Parameters;
+	Parameters: ReqParams;
 	UserId: number;
 	Username: string;
 	_Score: number;

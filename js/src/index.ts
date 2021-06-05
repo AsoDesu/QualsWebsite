@@ -65,9 +65,13 @@ function RquestScores(Value: ScoreRequestPacket) {
 	});
 }
 
-function GenerateLeaderboard(Scores: Score[]) {
+async function GenerateLeaderboard(Scores: Score[]) {
 	var Table = document.getElementById("table");
 	var Template = document.getElementById("template");
+	var MapData = (await (await fetch(`https://beatsaver.com/api/maps/by-hash/${Scores[0].Parameters.Beatmap.LevelId.replace("custom_level_", "")}`)).json()) as BSMap;
+
+	var notes = MapData.metadata.characteristics.find((c) => c.name == "Standard").difficulties[difficulty(Scores[0].Parameters.Beatmap.Difficulty)].notes;
+	var maxscore = (notes - 13) * 920 + 4715;
 
 	Table.removeChild(Template);
 
@@ -77,6 +81,7 @@ function GenerateLeaderboard(Scores: Score[]) {
 	Scores.forEach((score) => {
 		console.log(score.Username);
 		html = template
+			.replace("%acc%", ((score._Score / maxscore) * 100).toPrecision(3).toString() + "%")
 			.replace("%place%", (Scores.indexOf(score) + 1).toString())
 			.replace("%name%", score.Username)
 			.replace("%score%", score._Score.toString());
@@ -86,6 +91,17 @@ function GenerateLeaderboard(Scores: Score[]) {
 
 	document.getElementById("loading").innerHTML = "";
 	document.getElementById("table-container").classList.remove("hidden");
+}
+
+function difficulty(x: number) {
+	switch (x) {
+		case 0:
+			return "easy";
+		case 1:
+			return "normal";
+		case 2:
+			return "hard";
+	}
 }
 
 window.onload = PageLoad;
