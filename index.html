@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>115 Royale Qualifers Leaderboard</title>
+
+    <link href="./download/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./fonts/LEIXO-Bold.css" rel="stylesheet">
+</head>
+
+<body style="background-color: #212121;">
+
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="https://beatkhana.com/assets/images/2147484236_pRFIFVvFITtVucE.webp" height="40"
+                        alt="115 Royale Logo" class="d-inline-block align-text-top">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav mb-2 mb-lg-0 justify-content-start">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="select" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Maps
+                            </a>
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="select">
+                                <li><a class="dropdown-item text-light" href="?map=1">Kakurenbocchi</a></li>
+                                <li><a class="dropdown-item text-light" href="?map=2">Lose It</a></li>
+                                <li><a class="dropdown-item text-light" href="?map=3">Gate One</a></li>
+                                <li><a class="dropdown-item text-light" href="?map=4">Nobody To Love</a></li>
+                                <li><a class="dropdown-item text-light" href="?map=5">Kakumei no Bullet</a></li>
+                                <li><a class="dropdown-item text-light" href="?map=6">Pokemon Capture</a></li>
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        <div id="content" class="mt-5" style="width: 50vw; margin: auto; background-color: #212121">
+            <div>
+                <h2 class="d-inline-flex text-light" id="title"></a>
+                </h2>
+            </div>
+
+            <div class="w-100 d-flex justify-content-center" id="loading">
+                <div class="spinner-border text-light fs-2" style="height: 100px; width: 100px;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <table class="table text-light hidden" id="table-container">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Score / Acc</th>
+                    </tr>
+                </thead>
+
+                <tbody id="table">
+                    <tr class="text-light" id="template">
+                        <th class="text-light">%place%</th>
+                        <th>
+                            <p class="d-inline align-middle" class="text-light">%name%</p>
+                        </th>
+                        <th class="text-light">%score%
+                            <!--<p class="text-secondary d-inline text-light"
+                                style="font-size: 12px;">%acc%</p>-->
+                        </th>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ErrorModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Failed to connect to Tournament Assistant</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    We tried to connect to TournamentAssistant, but failed. This most likley means that the TA Server is
+                    down, please contact @Aso#0001 on discord.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./download/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js/dist/index.js"></script>
+    <script src="js/dist/Values.js"></script>
+</body>
+
+</html>
