@@ -1,8 +1,9 @@
 // (noteCount - 13) * 920 + 4715
 
 function PageLoad() {
-	if (window.location.protocol != "http") {
-		window.location.protocol = "http";
+	console.log(window.location.protocol);
+	if (window.location.protocol != "http:") {
+		window.location.protocol = "http:";
 	}
 
 	const urlParams = new URLSearchParams(window.location.search);
