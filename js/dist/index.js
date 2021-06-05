@@ -1,4 +1,5 @@
 "use strict";
+// (noteCount - 13) * 920 + 4715
 function PageLoad() {
     const urlParams = new URLSearchParams(window.location.search);
     const map = urlParams.get("map");
