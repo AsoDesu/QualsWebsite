@@ -1,6 +1,10 @@
 // (noteCount - 13) * 920 + 4715
 
 function PageLoad() {
+	if (window.location.protocol != "http") {
+		window.location.protocol = "https";
+	}
+
 	const urlParams = new URLSearchParams(window.location.search);
 	const map = urlParams.get("map");
 
@@ -47,8 +51,10 @@ function RquestScores(Value: ScoreRequestPacket) {
 	var Overlay = new WebSocket("ws://ta.asodev.net:10157");
 
 	Overlay.addEventListener("error", () => {
-		var ErrorModal = new bootstrap.Modal(document.getElementById("ErrorModal"), {});
-		ErrorModal.toggle();
+		ErrorModal(
+			"Failed to connect to TournamentAssistant",
+			"We tried to connect to TournamentAssistant, but failed. This most likley means that the TA Server is down, please contact @Aso#0001 on discord."
+		);
 	});
 
 	Overlay.addEventListener("open", () => {
@@ -102,6 +108,14 @@ function difficulty(x: number) {
 		case 2:
 			return "hard";
 	}
+}
+
+function ErrorModal(title: string, description: string) {
+	document.getElementById("err-title").innerText = title;
+	document.getElementById("err-desc").innerText = description;
+
+	var ErrorModal = new bootstrap.Modal(document.getElementById("ErrorModal"), {});
+	ErrorModal.toggle();
 }
 
 window.onload = PageLoad;
