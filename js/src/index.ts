@@ -1,10 +1,17 @@
 // (noteCount - 13) * 920 + 4715
 
+var Overlay = new WebSocket("ws://127.0.0.1:10157");
+var error = false;
+
 function PageLoad() {
-	console.log(window.location.protocol);
 	if (window.location.protocol != "http:") {
 		window.location.protocol = "http:";
 	}
+
+	Overlay.addEventListener("error", () => {
+		var ErrorModal = new bootstrap.Modal(document.getElementById("ErrorModal"), {});
+		ErrorModal.toggle();
+	});
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const map = urlParams.get("map");
@@ -30,6 +37,8 @@ function PageLoad() {
 		case "6":
 			Value = PokemonCapture;
 			break;
+		case "all":
+			return;
 		case null:
 			window.location.href = "?map=1";
 			return;
@@ -43,32 +52,29 @@ function PageLoad() {
 
 	document.getElementById("title").innerText = Value.SpecificPacket.Parameters.Beatmap.Name;
 
-	RquestScores(Value);
+	RequestScores(Value, (Scores: Score[]) => {
+		GenerateLeaderboard(Scores);
+	});
 }
 
 var bootstrap: any;
 
-function RquestScores(Value: ScoreRequestPacket) {
-	var Overlay = new WebSocket("ws://ta.asodev.net:10157");
-
-	Overlay.addEventListener("error", () => {
-		ErrorModal(
-			"Failed to connect to TournamentAssistant",
-			"We tried to connect to TournamentAssistant, but failed. This most likley means that the TA Server is down, please contact @Aso#0001 on discord."
-		);
-	});
-
-	Overlay.addEventListener("open", () => {
+function RequestScores(Value: ScoreRequestPacket, cb: any) {
+	if (Overlay.readyState != Overlay.OPEN) {
+		Overlay.addEventListener("open", () => {
+			Overlay.send(JSON.stringify(Value));
+		});
+	} else {
 		Overlay.send(JSON.stringify(Value));
-	});
+	}
 
 	Overlay.addEventListener("message", async (msg) => {
 		var data = (await JSON.parse(msg.data)) as Packet;
 		if (!data.SpecificPacket.Scores) return;
 
 		var res = data.SpecificPacket as ScoreResponsePacket;
-		GenerateLeaderboard(res.Scores);
-		Overlay.close();
+		console.log(res.Scores[0].Parameters.Beatmap.Name);
+		cb(res.Scores);
 	});
 }
 
@@ -109,14 +115,6 @@ function difficulty(x: number) {
 		case 2:
 			return "hard";
 	}
-}
-
-function ErrorModal(title: string, description: string) {
-	document.getElementById("err-title").innerText = title;
-	document.getElementById("err-desc").innerText = description;
-
-	var ErrorModal = new bootstrap.Modal(document.getElementById("ErrorModal"), {});
-	ErrorModal.toggle();
 }
 
 window.onload = PageLoad;
