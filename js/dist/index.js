@@ -1,6 +1,6 @@
 "use strict";
 // (noteCount - 13) * 920 + 4715
-var Overlay = new WebSocket("ws://127.0.0.1:10157");
+var Overlay = new WebSocket("ws://ta.asodev.net:10157");
 var error = false;
 function PageLoad() {
     if (window.location.protocol != "http:") {
